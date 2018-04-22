@@ -8,8 +8,6 @@
 				"<all_urls>"
 			],
 			"js": [
-				// "libs/p5/libraries/p5.js",
-				// "libs/p5/libraries/p5.dom.js",
 				"libs/jquery.min.js"
 			]
 		}
