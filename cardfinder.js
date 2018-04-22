@@ -1,50 +1,69 @@
 // Partial search URL:
 // https://omgvamp-hearthstone-v1.p.mashape.com/cards/search/{name}
 
-function searchCards() {
+// Wiki search URL:
+// https://hearthstone.gamepedia.com/index.php?search={name}
+
+function searchCards() 
+{
 	let name = $('#input').val();
 	let apiCall = `https://omgvamp-hearthstone-v1.p.mashape.com/cards/search/${name}`;
 	let prodKey = 'jlLw9oszzTmshV46ZR5HYcm0GJN3p1VOFpxjsnaY0bUNcE0183';
 
 	let ajax = new XMLHttpRequest();
-	ajax.onload = gotJSON;
+	ajax.onload = gotResponse;
 	ajax.onerror = function(err) { console.log(err); }
 	ajax.open('GET', apiCall, true);
 	ajax.setRequestHeader('X-Mashape-Key', prodKey);
 	ajax.send();
 }
 
-function gotJSON(json) {
+function imageExists(image_url)
+{
+    let http = new XMLHttpRequest();
+    http.open('HEAD', image_url, false);
+    http.send();
+
+    return http.status != 404;
+}
+
+function gotResponse(progressEvent) 
+{
 	let results = $('#results');
 	results.empty();
 
-	let response = JSON.parse(json.currentTarget.response);
-	response.sort(sortCards);
-	console.log(response);
-	
+	let response = JSON.parse(progressEvent.currentTarget.response);
+
 	if(response.error == 404)
 	{
 		results.text('No results.');
 	}
 	else
 	{
+		response.sort(sortCards);
+	
 		for(let card of response)
 		{
-			let name = card.name;
-			let newCard = $('<div></div>');
-			newCard.addClass('card');
+			if(card.img != undefined && imageExists(card.img))
+			{
+				let name = card.name;
+				let cardLink = $('<a></a>');
+				cardLink.attr('href', `https://hearthstone.gamepedia.com/index.php?search=${name}`);
+				cardLink.on('click', function() {
+					chrome.tabs.create({url: $(this).attr('href')});
+				});
 
-			let cardImg = $('<img></img>');
-			cardImg.addClass('cardimg');
-			cardImg.attr('src', card.img);
-			newCard.append(cardImg);
+				let newCard = $('<div></div>');
+				newCard.addClass('card');
 
-			// let cardName = $('<p></p>');
-			// cardName.addClass('cardname');
-			// cardName.text(name);
-			// newCard.append(cardName);
+				let cardImg = $('<img></img>');
+				cardImg.addClass('cardimg');
+				cardImg.attr('src', card.img);
+				newCard.append(cardImg);
+				cardLink.append(newCard);
 
-			$('#results').append(newCard);
+				$('#results').append(cardLink);
+			}
 		}
 	}
 }
@@ -86,7 +105,6 @@ function sortCards(a, b)
 $('#search').click(searchCards);
 
 $('#order').click(function() {
-	console.log($(this).html());
 	if($(this).html() == 'Ascending')
 	{
 		$(this).html('Descending');
