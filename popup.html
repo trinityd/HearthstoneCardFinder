@@ -1,0 +1,67 @@
+<html>
+<head>
+	<link href="https://fonts.googleapis.com/css?family=Bree+Serif" rel="stylesheet">
+	<script language="javascript" src="libs/p5/libraries/p5.js"></script>
+    <script language="javascript" src="libs/p5/libraries/p5.dom.js"></script>
+    <script src="libs/jquery.min.js"></script>
+<style>
+	.center {
+		text-align: center;
+	}
+	.row {
+		margin-bottom: 5px;
+	}
+	#title {
+		width: 400px;
+		font-family: 'Bree Serif', serif;
+		font-weight: bolder;
+		font-size: 150%;
+		background-color: #039be5;
+		margin-bottom: 5px;
+	}
+	#inputarea {
+		margin-bottom: 5px;
+	}
+	#sort {
+		height: 25px;
+	}
+	#order {
+		height: 25px;
+	}
+	.card {
+		width: 300px;
+		text-align: center;
+		margin: 0 auto;
+		/*border: 1px solid green;*/
+	}
+	.cardimg {
+		width: 300px;
+	}
+	body {
+		margin: 0px;
+		background-color: white;
+	}
+</style>
+</head>
+<body>
+	<div id='title' class='center'>
+		Hearthstone Card Finder
+	</div>
+	<div id='inputarea' class='center'>
+		<div class='row'>
+		<input id='input' type='text'>
+		<button id='search'>Search</button>
+		</div>
+		Sort by: 
+		<select id='sort'>
+			<option name='name' selected>Name</option>
+			<option name='cost'>Cost</option>
+			<option name='rarity'>Rarity</option>
+		</select>
+		<button id='order'>Ascending</button>
+	</div>
+	<div id='results' class='center'>
+	</div>
+	<script language="javascript" src="cardfinder.js"></script>
+</body>
+</html>
