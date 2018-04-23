@@ -1,7 +1,8 @@
 {
 	"manifest_version": 2,
 	"name": "Hearthstone Card Finder",
-	"version": "0.1",
+	"short_name": "Hearthstone Card Finder",
+	"version": "0.1.1",
 	"content_scripts": [
 		{
 			"matches": [
