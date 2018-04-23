@@ -2,7 +2,8 @@
 	"manifest_version": 2,
 	"name": "Hearthstone Card Finder",
 	"short_name": "Hearthstone Card Finder",
-	"version": "0.1.1",
+	"description": "Search Hearthstone cards",
+	"version": "0.1.2",
 	"content_scripts": [
 		{
 			"matches": [
